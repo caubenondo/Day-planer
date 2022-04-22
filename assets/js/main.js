@@ -33,8 +33,8 @@ function getLocalPlanner(){
 // store the planner to local storage
 function storePlanner(){
     // grab values of all textareas
-    for (let i = 9;i<=17;i++){
-        planner[i-9][1] = $(`#input-${i}`).val().trim();
+    for (let hour of planner){
+        hour[1] = $(`#input-${hour[0]}`).val().trim();
     }
     // console.log(planner);
     localStorage.setItem('Planner',JSON.stringify(planner));
@@ -45,17 +45,17 @@ function updateTable(){
     let htmlTemplate = ``
     // take advantage of ternary to do choose the right bg class for textarea
     for (let row of planner){
-        
+
         htmlTemplate += `
         <tr data-hour="${row[0]}">
-            <td class="text-end"><h3>${row[0]<=12? row[0]:row[0]%12}:00 ${row[0]<12?'AM':'PM'}</h3></td>
+            <td class="text-end" style="width: 15%"><p class='h3'>${row[0]<=12? row[0]:row[0]%12}:00 ${row[0]<12?'AM':'PM'}</p></td>
         <td>
             <textarea placeholder="To do" ${row[0]<currentHour? 'disabled':''}
             class="form-control ${row[0]<currentHour?'bg-secondary text-white':row[0]==currentHour? 'bg-danger text-white':'bg-success text-white'}" 
             id="input-${row[0]}" 
             rows="2">${row[1].trim()}</textarea>
         </td>
-        <td><button ${row[0]<currentHour? 'disabled':''} type="button"  class="btn btn-info fa-2x"><i class="fas text-white fa-font-awesome fa-save"></i></button></td>
+        <td style="width: 5%"><button ${row[0]<currentHour? 'disabled':''} type="button"  class="btn btn-info fa-2x"><i class="fas text-white fa-font-awesome fa-save"></i></button></td>
         </tr>        
         `;
     }
