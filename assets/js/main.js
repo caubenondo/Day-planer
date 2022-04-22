@@ -27,8 +27,6 @@ $('#plannerDisplay').on('click','.btn', function(e){
     storePlanner();
 });
 
-
-
 function getLocalPlanner(){
     // if there is no array in local storage
     planner = JSON.parse(localStorage.getItem('Planner')) || planner;
@@ -49,8 +47,11 @@ function updateTable(){
         <tr data-hour="${row[0]}">
             <td class="text-end"><h3>${row[0]<=12? row[0]:row[0]%12}:00 ${row[0]<12?'AM':'PM'}</h3></td>
         <td>
-            <textarea placeholder="To do" class="form-control ${row[0]<currentHour?'bg-secondary text-white':row[0]==currentHour? 'bg-danger text-white':'bg-success text-white'}" 
-                id="input-${row[0]}" rows="2">${row[1].trim()}</textarea>
+            <textarea placeholder="To do" 
+            class="form-control ${row[0]<currentHour?'bg-secondary text-white':row[0]==currentHour? 'bg-danger text-white':'bg-success text-white'}" 
+            id="input-${row[0]}" 
+            rows="2">${row[1].trim()}</textarea>
+        </td>
         <td><button type="button"  class="btn btn-info fa-2x"><i class="fas text-white fa-font-awesome fa-save"></i></button></td>
         </tr>        
         `;
