@@ -50,25 +50,26 @@ function storePlanner() {
 
 // update/render the planner view  
 function updateTable() {
-    let htmlTemplate = ``
+    let htmlTemplate = ``;
+    let divTemplate = ``;
     // take advantage of ternary to do choose the right bg class for textarea
     for (let row of planner) {
 
-        htmlTemplate += `
-        <tr data-hour="${row[0]}">
-            <td class="text-end" style="width: 15%"><p class='h3'>${row[0]<=12? row[0]:row[0]%12}:00 ${row[0]<12?'AM':'PM'}</p></td>
-        <td>
-            <textarea placeholder="To do" ${row[0]<currentHour? 'disabled':''}
-            class="form-control ${row[0]<currentHour?'bg-secondary text-white':row[0]==currentHour? 'bg-danger text-white':'bg-success text-white'}" 
-            id="input-${row[0]}" 
-            rows="2">${row[1].trim()}</textarea>
-        </td>
-        <td style="width: 5%"><button ${row[0]<currentHour? 'disabled':''} type="button"  class="btn btn-info fa-2x"><i class="fas text-white fa-font-awesome fa-save"></i></button></td>
-        </tr>        
+        divTemplate += `
+        <div class="row time-block my-1">
+            <div class="col-2 hour text-end">
+                <p class="h5">${row[0]<=12? row[0]:row[0]%12}:00 ${row[0]<12?'AM':'PM'}</p>
+            </div>
+            <textarea ${row[0]<currentHour? 'disabled':''} class="col-9 ${row[0]<currentHour?'past':row[0]==currentHour? 'present':'future'}" id="input-${row[0]}"  >${row[1].trim()}</textarea>
+            <div class="saveBtn col-1" ${row[0]<currentHour? 'disabled':''}>
+                <button ${row[0]<currentHour? 'disabled':''}  type='button' class='btn text-white text-center'><i class="fas fa-font-awesome fa-save"></i></button>
+            </div>       
+        </div>
         `;
+        
     }
 
-    $('#plannerDisplay').html(htmlTemplate);
+    $('#plannerDisplay').html(divTemplate);
 }
 
 function main() {
