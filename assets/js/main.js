@@ -25,9 +25,8 @@ let checkHour = setInterval(function () {
 
 // store the planner everytime button click
 // take advantage of jquery event delegation feature, listen to button click only 
-$('#plannerDisplay').on('click', '.btn', function (e) {
+$('#plannerDisplay').on('click', '.storeLocal', function (e) {
     // const element = e.target;
-    // console.log(element.closest('tr'));
     storePlanner();
 });
 
@@ -50,25 +49,23 @@ function storePlanner() {
 
 // update/render the planner view  
 function updateTable() {
-    let htmlTemplate = ``;
+   
     let divTemplate = ``;
     // take advantage of ternary to do choose the right bg class for textarea
     for (let row of planner) {
 
         divTemplate += `
-        <div class="row time-block my-1">
+        <div class="row time-block my-4">
             <div class="col-2 hour text-end">
-                <p class="h5">${row[0]<=12? row[0]:row[0]%12}:00 ${row[0]<12?'AM':'PM'}</p>
+                <p class="h4">${row[0]<=12? row[0]:row[0]%12}:00 ${row[0]<12?'AM':'PM'}</p>
             </div>
-            <textarea ${row[0]<currentHour? 'disabled':''} class="col-9 ${row[0]<currentHour?'past':row[0]==currentHour? 'present':'future'}" id="input-${row[0]}"  >${row[1].trim()}</textarea>
-            <div class="saveBtn col-1" ${row[0]<currentHour? 'disabled':''}>
-                <button ${row[0]<currentHour? 'disabled':''}  type='button' class='btn text-white text-center'><i class="fas fa-font-awesome fa-save"></i></button>
+            <textarea class="col-8 col-lg-9 text-dark ${row[0]<currentHour?'past':row[0]==currentHour? 'present':'future'}" id="input-${row[0]}"  >${row[1].trim()}</textarea>
+            <div class="saveBtn col-2 col-lg-1 px-0 "  ${row[0]<currentHour? 'disabled':''} >
+                <button ${row[0]<currentHour? 'disabled':''}  type='button' class='btn storeLocal text-white text-center' style="font-size:2rem;"><i class="fas fa-font-awesome fa-save"></i></button>
             </div>       
         </div>
         `;
-        
     }
-
     $('#plannerDisplay').html(divTemplate);
 }
 
