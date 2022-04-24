@@ -1,7 +1,7 @@
 # Day-planer
 ### Project 05: Day Planner
 ### Author: Hai Duong
-
+#### [Demo Link](https://caubenondo.github.io/Day-planer/)
 #### Description:
 This is a simple calendar application that allows a user to save events for each hour of the day by modifying starter code. This app will run in the browser and feature dynamically updated HTML and CSS powered by jQuery.
 
