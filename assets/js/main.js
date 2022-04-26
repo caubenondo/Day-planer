@@ -26,8 +26,8 @@ let checkHour = setInterval(function () {
 // store the planner everytime button click
 // take advantage of jquery event delegation feature, listen to button click only 
 $('#plannerDisplay').on('click', '.storeLocal', function (e) {
-    // const element = e.target;
-    storePlanner();
+    const element = e.target;
+    storePlanner(parseInt(element.dataset.button));
 });
 
 // get the planner from local storage,
@@ -38,12 +38,12 @@ function getLocalPlanner() {
 }
 
 // store the planner to local storage
-function storePlanner() {
-    // grab values of all textareas
-    for (let hour of planner) {
-        hour[1] = $(`#input-${hour[0]}`).val().trim();
-    }
-    // console.log(planner);
+function storePlanner(number) {
+    // grab value of textareas
+   
+    let target =  planner.filter(a=>a[0]==number);
+    planner[(number-9)][1] = $(`#input-${number}`).val().trim();
+
     localStorage.setItem('Planner', JSON.stringify(planner));
 }
 
@@ -59,9 +59,9 @@ function updateTable() {
             <div class="col-2 hour text-end">
                 <p class="h4">${row[0]<=12? row[0]:row[0]%12}:00 ${row[0]<12?'AM':'PM'}</p>
             </div>
-            <textarea class="col-8 col-lg-9 text-dark ${row[0]<currentHour?'past':row[0]==currentHour? 'present':'future'}" id="input-${row[0]}"  >${row[1].trim()}</textarea>
-            <div class="saveBtn col-2 col-lg-1 px-0 "  ${row[0]<currentHour? 'disabled':''} >
-                <button ${row[0]<currentHour? 'disabled':''}  type='button' class='btn storeLocal text-white text-center' style="font-size:2rem;"><i class="fas fa-font-awesome fa-save"></i></button>
+            <textarea id="input-${row[0]}" class="col-8 col-lg-9 text-dark ${row[0]<currentHour?'past':row[0]==currentHour? 'present':'future'}" id="input-${row[0]}"  >${row[1].trim()}</textarea>
+            <div class="saveBtn col-2 col-lg-1 px-0 " >
+                <button  type='button' data-button="${row[0]}" class='btn storeLocal text-white text-center' style="font-size:2rem;"><i data-button="${row[0]}" class="fas fa-font-awesome fa-save"></i></button>
             </div>       
         </div>
         `;
